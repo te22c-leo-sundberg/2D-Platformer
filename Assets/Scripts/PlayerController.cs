@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     bool canDash = true;
     bool isDashing;
     public bool IsDashBoosted = false;
+    public bool freezeRotation;
     [SerializeField] float dashPower = 24f;
     [SerializeField] float dashTime = 0.2f;
 
@@ -64,12 +65,11 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetAxisRaw("Jump") > 0 && canJump && IsGrounded())
         {
-            rb.AddForce(Vector2.up * jumpForce);
-            canJump = false;
+            Jump();
         }
         if (Input.GetAxisRaw("Jump") == 0)
         {
-            canJump = true;
+            StopJump();
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
             DashBooster();
         }
         else
-        {}
+        { }
     }
 
     private bool IsGrounded()
@@ -95,6 +95,17 @@ public class PlayerController : MonoBehaviour
         {
             return false;
         }
+    }
+    private void Jump()
+    {
+        canJump = false;
+        rb.AddForce(Vector2.up * jumpForce);
+        rb.freezeRotation = true;
+    }
+    private void StopJump()
+    {
+        rb.freezeRotation = false;
+        canJump = true;
     }
     private IEnumerator Dash() //make rythm game dash? every x seconds your character blinks, dash close to that timeframe and get a stronger dash
     {
