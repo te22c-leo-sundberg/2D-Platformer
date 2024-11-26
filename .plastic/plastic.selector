@@ -1,4 +1,3 @@
 repository "2D Platformer@GGunpaw@cloud"
   path "/"
-    br "/main"
-    co "/main"
+    smartbranch "/main" changeset "9"

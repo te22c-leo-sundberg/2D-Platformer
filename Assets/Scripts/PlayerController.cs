@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEditor.Callbacks;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -10,6 +11,9 @@ public class PlayerController : MonoBehaviour
     // float movespeed = 5;
     [SerializeField]
     float jumpForce = 10;
+    float originalJumpForce;
+    [SerializeField] float jumpBoostTime;
+    public bool isJumpBoosted = false;
     bool canJump = true;
     [SerializeField] public float dashBoostTime;
     bool isFacingRight = true;
@@ -17,12 +21,13 @@ public class PlayerController : MonoBehaviour
     private float xMove;
     bool canDash = true;
     bool isDashing;
-    public bool IsDashBoosted = false;
+    public bool isDashBoosted = false;
     public bool freezeRotation;
     [SerializeField] float dashPower = 24f;
     [SerializeField] float dashTime = 0.2f;
 
     float originalDashTime;
+    float originalGravity;
     [SerializeField] float dashCooldown = 1f;
 
     [SerializeField]
@@ -35,7 +40,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Sprite DashSlimeSprite;
     public void Start()
     {
+        originalGravity = rb.gravityScale;
         originalDashTime = dashTime;
+        originalJumpForce = jumpForce;
     }
     void Update()
     {
@@ -76,13 +83,16 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(Dash());
         }
-        if (IsDashBoosted)
+        if (isDashBoosted)
         {
-            Timers();
+            dashBoostTime -= Time.deltaTime;
             DashBooster();
         }
-        else
-        { }
+        if (isJumpBoosted)
+        {
+            jumpBoostTime -= Time.deltaTime;
+            JumpBooster();
+        }
     }
 
     private bool IsGrounded()
@@ -99,6 +109,7 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         canJump = false;
+        rb.transform.rotation = quaternion.identity;
         rb.AddForce(Vector2.up * jumpForce);
         rb.freezeRotation = true;
     }
@@ -119,11 +130,13 @@ public class PlayerController : MonoBehaviour
         }
         canDash = false;
         isDashing = true;
-        float originalGravity = rb.gravityScale;
+        rb.transform.rotation = quaternion.identity;
         rb.gravityScale = 0;
+        rb.freezeRotation = true;
         rb.velocity = new Vector2(dashDirection * dashPower, 0f);
         GetComponent<SpriteRenderer>().sprite = DashSlimeSprite;
         yield return new WaitForSeconds(dashTime);
+        rb.freezeRotation = false;
         rb.gravityScale = originalGravity;
         GetComponent<SpriteRenderer>().sprite = SlimeSprite;
         isDashing = false;
@@ -139,14 +152,28 @@ public class PlayerController : MonoBehaviour
         if (dashBoostTime > 0)
         {
             dashTime = 0.2f;
-            print("I dash further!");
         }
         else if (dashBoostTime <= 0)
         {
             dashTime = originalDashTime;
-            print("I stopped dashing further!");
-            IsDashBoosted = false;
-            dashBoostTime = 0.5f;
+            isDashBoosted = false;
+            dashBoostTime = 0.2f;
+        }
+    }
+    public void JumpBooster()
+    {
+        if (jumpBoostTime > 0)
+        {
+            if (Input.GetAxisRaw("Jump") > 0 && canJump)
+            {
+                rb.velocity = new Vector2 (0, 0);
+                Jump();
+            }
+        }
+        else if (jumpBoostTime <= 0)
+        {
+            isJumpBoosted = false;
+            jumpBoostTime = 0.2f;
         }
     }
 }

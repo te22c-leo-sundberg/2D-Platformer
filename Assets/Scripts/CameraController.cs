@@ -19,6 +19,10 @@ public class CameraController : MonoBehaviour
     {
         Vector3 pos = transform.position;
         pos.x = player.position.x + offset.x;
+        // if (player.position.y >= 1.5)
+        // {
+            pos.y = player.position.y + offset.y;
+        // }
         transform.position = pos;
     }
 }
