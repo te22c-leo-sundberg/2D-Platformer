@@ -322,7 +322,7 @@ Transform:
   m_GameObject: {fileID: 503887573}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.5, y: 5.5, z: 0}
+  m_LocalPosition: {x: 20.17, y: 2.44, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -623,7 +623,7 @@ GameObject:
   - component: {fileID: 1856186827}
   - component: {fileID: 1856186829}
   m_Layer: 0
-  m_Name: Tilemap
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1735,7 +1735,7 @@ CompositeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 1
+  m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
@@ -2201,13 +2201,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: JumpBooster
       objectReference: {fileID: 0}
+    - target: {fileID: 3324923079825021937, guid: 45039f50a2330334f8dfe607abf2c78b, type: 3}
+      propertyPath: m_TagString
+      value: JumpBoost
+      objectReference: {fileID: 0}
     - target: {fileID: 8995541238293584758, guid: 45039f50a2330334f8dfe607abf2c78b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2
+      value: 3.4
       objectReference: {fileID: 0}
     - target: {fileID: 8995541238293584758, guid: 45039f50a2330334f8dfe607abf2c78b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: -0.86
       objectReference: {fileID: 0}
     - target: {fileID: 8995541238293584758, guid: 45039f50a2330334f8dfe607abf2c78b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2258,13 +2262,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: DashBooster
       objectReference: {fileID: 0}
+    - target: {fileID: 2370465785380026727, guid: 7e0773251aeda6f47bba7d19fec142e0, type: 3}
+      propertyPath: m_TagString
+      value: DashBoost
+      objectReference: {fileID: 0}
     - target: {fileID: 3741326815371931101, guid: 7e0773251aeda6f47bba7d19fec142e0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.5
+      value: 10.68
       objectReference: {fileID: 0}
     - target: {fileID: 3741326815371931101, guid: 7e0773251aeda6f47bba7d19fec142e0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.5
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 3741326815371931101, guid: 7e0773251aeda6f47bba7d19fec142e0, type: 3}
       propertyPath: m_LocalPosition.z

@@ -53,10 +53,6 @@ public class PlayerController : MonoBehaviour
 
         xMove = Input.GetAxisRaw("Horizontal");
 
-        // rb.velocity = new(
-        //     xMove * speed,
-        //     rb.velocity.y
-        // );
         rb.velocity = new Vector2(xMove * speed, rb.velocity.y);
 
         if (rb.velocity.x < 0)
@@ -174,6 +170,17 @@ public class PlayerController : MonoBehaviour
         {
             isJumpBoosted = false;
             jumpBoostTime = 0.2f;
+        }
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "DashBoost")
+        {
+            isDashBoosted = true;
+        }
+        if (other.gameObject.tag == "JumpBoost")
+        {
+            isJumpBoosted = true;
         }
     }
 }
